@@ -1,7 +1,8 @@
 # TridentNet-mmdetection
 TridentNet in mmdetection
 
-支持Backbobe为ResNet和ResNeXt中所有检测网络
+支持Backbobe为ResNet和ResNeXt中所有检测网络，主要用于解决尺度不变性
+
 config参数修改，如下：
 
 backbone=dict(
@@ -22,4 +23,9 @@ backbone=dict(
     stage_with_dcn=(False, True, True, True)),
 
 测试结果
-在不增加运算量和参数量的前提下，相比于Bockbone为ResNet和ResNeXt网络，有一定的性能提升，具体视训练数据
+在不增加运算量和参数量的前提下，相比于Bockbone为ResNet和ResNeXt网络，有一定的性能提升，具体视训练数据，以下比较的是采用自有的业务数据，Tesla P100卡，多尺度训练，单尺度测试
+
+|                    |     AP50     | Inf time (fps) |
+|--------------------|:------------:|:--------------:|
+| ResNeXt101         |    0.766     |       7.1      |
+| TridentResNext101  |    0.776     |       7.1      |
