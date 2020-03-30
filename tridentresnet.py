@@ -419,7 +419,6 @@ class TridentBottleneckBlock(nn.Module):
         self.add_module(self.norm1_name, norm1)
         fallback_on_stride = False
         self.with_modulated_dcn = False
-
         self.conv2 = TridentConv(
             self.planes,
             self.planes,
@@ -820,11 +819,12 @@ class TridentResNet(nn.Module):
             x = res_layer(x)
             if i in self.out_indices:
                 outs.append(x)
+        batch_size = int(outs[3].shape[0]/3)
         if self.training:
-            dia_idx = np.random.randint(3)
-            outs[3] = outs[3][dia_idx:dia_idx+1, ...]
+            dia_idx = batch_size*np.random.randint(3)
+            outs[3] = outs[3][dia_idx:dia_idx+batch_size, ...]
         else:
-            outs[3] = outs[3][0:1, ...]
+            outs[3] = outs[3][0:batch_size, ...]
         return tuple(outs)
 
     def train(self, mode=True):
