@@ -824,7 +824,7 @@ class TridentResNet(nn.Module):
             dia_idx = batch_size*np.random.randint(3)
             outs[3] = outs[3][dia_idx:dia_idx+batch_size, ...]
         else:
-            outs[3] = outs[3][0:batch_size, ...]
+            outs[3] = outs[3][0:1, ...]
         return tuple(outs)
 
     def train(self, mode=True):
